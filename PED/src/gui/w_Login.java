@@ -4,8 +4,11 @@
  */
 package gui;
 
-import data.App_Settings;
+import data.InfoObjetcs.User;
+import data.Settings.App_Settings;
 import java.awt.GridBagConstraints;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * @author manuel.mora
@@ -22,23 +25,16 @@ public class W_Login extends javax.swing.JFrame {
     public W_Login(App_Settings appSettings) {
         
         this.appSettings = appSettings;
-        setLocationRelativeTo(null);
         initComponents();
         
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new W_Login(appSettings).setVisible(true);
-            }
-        });
-        
-        
+        lbl_Title.setText(lbl_Title.getText().replace("###", appSettings.getCurrentBank().getbName()));
         pnl_StatusBar.showPanel(appSettings);
-        pnl_Login.showPanel("BG1.png");
+        pnl_Login.showPanel("bg2.png");
         
         repaint();
         revalidate();
         setVisible(true);
+        setLocationRelativeTo(null);
         
         
     }
@@ -52,15 +48,15 @@ public class W_Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnl_StatusBar = new presets.Pnl_StatusBar();
-        pnl_Login = new presets.Custom_Panel();
+        pnl_StatusBar = new presets.CM_StatusBar();
+        pnl_Login = new presets.CM_Panel();
         p_container = new javax.swing.JPanel();
         lbl_Title = new javax.swing.JLabel();
         lbl_Username = new javax.swing.JLabel();
         lbl_Password = new javax.swing.JLabel();
-        tf_Username = new presets.Custom_TextField();
-        tf_Password = new presets.Custom_PasswordField();
-        custom_Button1 = new presets.Custom_Button();
+        tf_Username = new presets.CM_TextField();
+        tf_Password = new presets.CM_PasswordField();
+        btn_login = new presets.CM_Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de registro");
@@ -80,14 +76,13 @@ public class W_Login extends javax.swing.JFrame {
         pnl_Login.setLayout(new java.awt.BorderLayout());
 
         p_container.setMaximumSize(null);
-        p_container.setMinimumSize(null);
         p_container.setOpaque(false);
         p_container.setPreferredSize(new java.awt.Dimension(500, 600));
 
         lbl_Title.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         lbl_Title.setForeground(new java.awt.Color(0, 204, 204));
         lbl_Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Línea 3</p>   </div> </html><br>");
+        lbl_Title.setText("<html>   <div style=\"text-align: center; \">     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Bienvenido al banco ###</p>     <p style=\"text-shadow: 2px 2px 4px #aaa;\">Por favor inicie sesión</p>   </div> </html><br>");
         lbl_Title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lbl_Username.setText("Nombre de usuario :");
@@ -98,10 +93,15 @@ public class W_Login extends javax.swing.JFrame {
 
         tf_Password.setBorder(null);
 
-        custom_Button1.setBorder(null);
-        custom_Button1.setForeground(new java.awt.Color(255, 255, 255));
-        custom_Button1.setText("Iniciar Sesión");
-        custom_Button1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btn_login.setBorder(null);
+        btn_login.setForeground(new java.awt.Color(255, 255, 255));
+        btn_login.setText("Iniciar Sesión");
+        btn_login.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_containerLayout = new javax.swing.GroupLayout(p_container);
         p_container.setLayout(p_containerLayout);
@@ -116,7 +116,7 @@ public class W_Login extends javax.swing.JFrame {
                         .addComponent(lbl_Username, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                         .addComponent(lbl_Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tf_Password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
         p_containerLayout.setVerticalGroup(
@@ -133,8 +133,8 @@ public class W_Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tf_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
-                .addComponent(custom_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         pnl_Login.add(p_container, java.awt.BorderLayout.EAST);
@@ -144,17 +144,87 @@ public class W_Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        if (tf_Username.getText() == ""  || tf_Password.getPWSD() == "") {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el uisuario y la contraseña para poder continuar", "Error!!!", JOptionPane.WARNING_MESSAGE);
+        }else {
+
+            if ( // Valida que los inputs sean correctos y no contengan SQL Injection
+                    appSettings.getSql().noSQLInjection(tf_Username.getText())
+                    && appSettings.getSql().noSQLInjection(tf_Password.getPWSD())) {
+                // Si cumple los criterios consulta la base de datos en busca del usuario y la contraseña
+                
+                // String dbName, String tableName, String[] selectColumns, String[][] whereClauses, String[] groupByColumns, String[] orderByColumns
+                List<Object> validation =  appSettings.getSql().select(
+                        appSettings.getCurrentBank().getDbName(), 
+                        "Users", 
+                        //new String[]{"uType"}, 
+                        null, // Select *
+                        new String[][]{
+                            {"uUsername","=",tf_Username.getText()},
+                            {"uPassword","=", tf_Password.getPWSD()}
+                        },
+                        null, null);
+                
+                System.out.println("Resultados : " + validation.size() );
+                
+                if (validation.size() > 1) { // Valida si el usuario y la contraseña se encuentran en la base de datos 
+
+                    Object[] row = (Object[]) validation.getLast();
+
+                    for (int i = 0; i < row.length; i++) {
+                        System.out.println(" Valor - " + row[i]);
+                    }
+                    String userType = (String) row[5];
+                    appSettings.setCurrentUser(
+                            //int ID, String username, String name, String last_name, String user_type, String status, Date date
+                            new User(
+                                    Integer.parseInt(row[0].toString()),
+                                    row[1].toString(),
+                                    row[3].toString(),
+                                    row[4].toString(),
+                                    row[5].toString(),
+                                    row[6].toString(),
+                                    null
+                            )
+                    );
+
+                    switch (userType) {
+                        case "Admin":
+                            // Agregar pantalla para admin
+                            break;
+                        case "Dispenser":
+                            // Agregar pantalla para admin
+                            break;
+                        case "Cashier":
+                            // Agregar pantalla para admin
+                            break;
+
+                    }
+                    appSettings.initCounters();
+                    W_Home w_Home = new W_Home(appSettings);
+                    this.dispose();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Sus credenciales no son correctos\nPor favor intente de nuevo", "No puede iniciar sesión", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_btn_loginActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presets.Custom_Button custom_Button1;
+    private presets.CM_Button btn_login;
     private javax.swing.JLabel lbl_Password;
     private javax.swing.JLabel lbl_Title;
     private javax.swing.JLabel lbl_Username;
     private javax.swing.JPanel p_container;
-    private presets.Custom_Panel pnl_Login;
-    private presets.Pnl_StatusBar pnl_StatusBar;
-    private presets.Custom_PasswordField tf_Password;
-    private presets.Custom_TextField tf_Username;
+    private presets.CM_Panel pnl_Login;
+    private presets.CM_StatusBar pnl_StatusBar;
+    private presets.CM_PasswordField tf_Password;
+    private presets.CM_TextField tf_Username;
     // End of variables declaration//GEN-END:variables
 }

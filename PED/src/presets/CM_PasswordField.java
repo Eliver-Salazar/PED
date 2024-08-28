@@ -14,11 +14,11 @@ import javax.swing.JPasswordField;
  *
  * @author Manuel Mora Monge
  */
-public class Custom_PasswordField extends JPasswordField{
+public class CM_PasswordField extends JPasswordField{
 
     private final Image backgroundImage;
     
-    public Custom_PasswordField(){
+    public CM_PasswordField(){
         super();
         
         
@@ -44,7 +44,8 @@ public class Custom_PasswordField extends JPasswordField{
         super.paintComponent(g);
         // Dibujar la imagen de fondo escalada al tamaño del panel
         if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            // g.drawImage (Imagen, posición x, posición y, ancho, largo, objeto)
+            g.drawImage(backgroundImage, 1, 1, getWidth()-3, getHeight()-3, this);
         }
     }
     
